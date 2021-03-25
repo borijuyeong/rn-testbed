@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 
 import {
@@ -27,10 +28,24 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-function HomeScreen() {
+function HomeScreen1() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
+      <Text>Home!asdf</Text>
+    </View>
+  );
+}
+function HomeScreen2() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home2</Text>
+    </View>
+  );
+}
+function HomeScreen3() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home3asdf</Text>
     </View>
   );
 }
@@ -42,14 +57,44 @@ function SettingsScreen() {
     </View>
   );
 }
+const linking = {
+  prefixes: [
+    'testbed://'
+  ],
+  config: {
+    screens: {
+      Home: {
+        initialRouteName: 'HomeScreen1',
+        screens: {
+          HomeScreen1: 'HomeScreen1',
+          HomeScreen2: 'HomeScreen2',
+          HomeScreen3: 'HomeScreen3',
+        },
+      },
+      Settings: 'Settings',
+    },
+  },
+};
+// to go to HomeScreen3 => testbed://HomeScreen3
 
 const Tab = createBottomTabNavigator();
+const Tab2 = createStackNavigator();
+
+function Home() {
+  return (
+    <Tab2.Navigator>
+      <Tab2.Screen name="HomeScreen1" component={HomeScreen1} />
+      <Tab2.Screen name="HomeScreen2" component={HomeScreen2} />
+      <Tab2.Screen name="HomeScreen3" component={HomeScreen3} />
+    </Tab2.Navigator>
+  );
+}
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>

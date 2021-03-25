@@ -145,7 +145,6 @@
 				5F2833BCF82ABCA0B2544B87 /* Pods-testbed-testbedTests.debug.xcconfig */,
 				8B95ADC8247A58043C37BBE0 /* Pods-testbed-testbedTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -485,6 +484,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7U5LQ2972J;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = testbed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -511,6 +511,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7U5LQ2972J;
 				INFOPLIST_FILE = testbed/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
