@@ -28,24 +28,27 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-function HomeScreen1() {
+function HomeScreen1({route}) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home!asdf</Text>
     </View>
   );
 }
-function HomeScreen2() {
+function HomeScreen2({route}) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home2</Text>
     </View>
   );
 }
-function HomeScreen3() {
+function HomeScreen3({route}) {
+  const {id} = route.params
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home3asdf</Text>
+      <Text>{id}</Text>
     </View>
   );
 }
@@ -66,9 +69,14 @@ const linking = {
       Home: {
         initialRouteName: 'HomeScreen1',
         screens: {
-          HomeScreen1: 'HomeScreen1',
-          HomeScreen2: 'HomeScreen2',
-          HomeScreen3: 'HomeScreen3',
+          HomeScreen1: 'HomeScreen1/',
+          HomeScreen2: 'HomeScreen2/',
+          HomeScreen3: {
+            path: 'HomeScreen3/:id/',
+            parse: {
+              id: (id) => `${id}`,
+            },
+          },
         },
       },
       Settings: 'Settings',
