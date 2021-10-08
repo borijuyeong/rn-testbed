@@ -1,110 +1,92 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
+import React, {useState, useEffect,useCallback} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
+  Platform,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
+  Button,
+  Alert,
+  TextInput,
+  StatusBar,
+  Keyboard,
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  Dimensions
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+const {width,height}=Dimensions.get("window");
+import {WebView} from 'react-native-webview';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-function HomeScreen1({route}) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!asdf</Text>
-    </View>
-  );
-}
-function HomeScreen2({route}) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home2</Text>
-    </View>
-  );
-}
-function HomeScreen3({route}) {
-  const {id} = route.params
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home3asdf</Text>
-      <Text>{id}</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-const linking = {
-  prefixes: [
-    'testbed://'
-  ],
-  config: {
-    screens: {
-      Home: {
-        initialRouteName: 'HomeScreen1',
-        screens: {
-          HomeScreen1: 'HomeScreen1/',
-          HomeScreen2: 'HomeScreen2/',
-          HomeScreen3: {
-            path: 'HomeScreen3/:id/',
-            parse: {
-              id: (id) => `${id}`,
-            },
-          },
-        },
-      },
-      Settings: 'Settings',
-    },
-  },
-};
-// to go to HomeScreen3 => testbed://HomeScreen3
-
-const Tab = createBottomTabNavigator();
-const Tab2 = createStackNavigator();
-
-function Home() {
-  return (
-    <Tab2.Navigator>
-      <Tab2.Screen name="HomeScreen1" component={HomeScreen1} />
-      <Tab2.Screen name="HomeScreen2" component={HomeScreen2} />
-      <Tab2.Screen name="HomeScreen3" component={HomeScreen3} />
-    </Tab2.Navigator>
-  );
-}
 
 export default function App() {
+  const listViewData=[
+    {key:1,text:'item1'},
+    {key:2,text:'item1'},
+    {key:3,text:'item1'},
+    {key:4,text:'item1'},
+    {key:5,text:'item1'},
+
+  ]
   return (
-    <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
+    <SafeAreaView>
+      <SwipeListView
+        data={listViewData}
+        renderItem={ (data, rowMap) => (
+            <View style={styles.rowFront}>
+                <Text>I am {data.item.text} in a SwipeListView</Text>
+            </View>
+        )}
+        renderHiddenItem={ (data, rowMap) => (
+          <View style={styles.rowBack}>
+              <Text>Left</Text>
+              <Text>Right</Text>
+          </View>
+        )}
+        leftOpenValue={150}
+        rightOpenValue={-150}
+      />
+    </SafeAreaView>
+  )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: "space-between"
+  },
+  header: {
+    fontSize: 36,
+    marginBottom: 48
+  },
+  textInput: {
+    height: 40,
+    borderColor: "#000000",
+    borderBottomWidth: 1,
+    marginBottom: 36
+  },
+  btnContainer: {
+    backgroundColor: "white",
+    marginTop: 12
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: '#DDD',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+  },
+  rowFront: {
+  alignItems: 'center',
+  backgroundColor: '#CCC',
+  borderBottomColor: 'black',
+  borderBottomWidth: 1,
+  justifyContent: 'center',
+  height: 50,
+  width: '100%',
+},
+});
